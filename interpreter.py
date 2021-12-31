@@ -47,6 +47,9 @@ def dictL_jumpToIndex():
     else:
         return
 
+def dictL_change():
+    global maindict, pos, paramList
+    maindict[str(pos)] = paramList[0]
 
 def checkArg(arg):
     global maindict
@@ -64,6 +67,8 @@ def checkArg(arg):
         dictL_reset()
     if(arg.lower() == "jti" and maindict != {}):
         dictL_jumpToIndex()
+    if(arg.lower() == "chng" and maindict != {}):
+        dictL_change()
 
 
 #opening the file

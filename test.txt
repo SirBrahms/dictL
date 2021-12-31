@@ -11,6 +11,5 @@ prn
 
 jti 2
 prn
-
-jti 767
+chng changed
 prn
