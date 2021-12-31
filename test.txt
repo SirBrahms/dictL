@@ -1,6 +1,16 @@
-abcd tz sdhf
-asdjhb asdh adjf adjf
-asdih dfj
-sakdh sdf
-$asjdbn sdf
-jdafs sdg fg
+add a
+add b
+add c
+add d
+add e
+add f
+add g
+
+jti 4
+prn
+
+jti 2
+prn
+
+jti 767
+prn
