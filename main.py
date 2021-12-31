@@ -4,8 +4,6 @@ import os
 arg = ""
 paramList = []
 
-#test124567
-
 #function to distinguish the first element in a line and seperate it
 def formStrings(fulllist):
     global arg
