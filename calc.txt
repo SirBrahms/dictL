@@ -1,0 +1,32 @@
+*first calculator written in dictL
+add nul
+add nul
+add nul
+
+inp 1 Number 1:
+inp 2 Number 2:
+inp 3 operator:
+
+if 3 == +
+> 1 + 2
+> prn ?lit Result:
+> prn 1
+> !
+
+if 3 == -
+> 1 - 2
+> prn ?lit Result:
+> prn 1
+> !
+
+if 3 == *
+> 1 * 2
+> prn ?lit Result:
+> prn 1
+> !
+
+if 3 == /
+> 1 / 2
+> prn ?lit Result:
+> prn 1
+> !
