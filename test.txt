@@ -1,8 +1,11 @@
 *official test-file for the dictL esolang
-add a
-add b
-add c
-add d
-add e
-add f
+add 1
+add 5
+add 6
 
+
+1 = 1 + 4
+prn 1
+
+2 + 3
+prn 2

@@ -6,14 +6,14 @@ arg = ""
 paramList = []
 pos = 1 #position/"index" in the main dictionary
 pushvar = 0 #variable to store the position passed by pushI
-ifpos = 1 #variable used to navigate the "ifdict" dictionary
-operations = ["+", "-", "*", "/"]
+utilpos = 1 #variable used to navigate the "utildict" dictionary
+operations = ["+", "-", "*", "/"] #allowed operations for math-implementation
 
 
 #defining the starting dictionary
 maindict = {}
 #defining the dictionary to hold all arguments for "if" statements
-ifdict = {}
+utildict = {}
 
 #function to distinguish the first element in a line and seperate it
 def formStrings(fulllist):
@@ -29,8 +29,8 @@ def ListToString(listStr):
         retStr += e + " "
     return retStr
 
-def fillifDict():
-    global lines, ifdict
+def fillutildict():
+    global lines, utildict
     events = []
     eventsFull = []
 
@@ -41,7 +41,7 @@ def fillifDict():
     for command in events:
         stripcommand = command.strip()
         if(stripcommand == "!"):
-            ifdict[str(len(ifdict)+1)] = eventsFull
+            utildict[str(len(utildict)+1)] = eventsFull
             eventsFull = []
         else:
             eventsFull.append(stripcommand)
@@ -66,7 +66,7 @@ def dictL_print():
     global pos, maindict, paramList
     fullprint = ""
     if(paramList != []):
-        if(paramList[0] != None and paramList[0] != len(maindict) and not "?lit" in paramList):
+        if(paramList[0] != None and paramList[0] != len(maindict)+1 and not "?lit" in paramList):
             print(maindict[str(paramList[0])])
             return
         elif("?lit" in paramList):
@@ -113,7 +113,7 @@ def dictL_exit():
     exit()
 
 def dictL_if(literacy = ""):
-    global ifdict, paramList, lines, ifpos, maindict
+    global utildict, paramList, lines, utilpos, maindict
     #params: [0] = operand 1 [1] = operator, [2]
 
     if(literacy == ""):
@@ -124,17 +124,17 @@ def dictL_if(literacy = ""):
 
     if(paramList[1] == "=="):
         if(paramList[0] == paramList[2]):
-            for e in ifdict[str(ifpos)]:
+            for e in utildict[str(utilpos)]:
                 fullsplitlist = e.split(" ")
                 formStrings(fullsplitlist)
                 if(arg in maindict):
                     checkArith(arg)
                 else:
                     checkArg(arg)
-        ifpos += 1
+        utilpos += 1
     elif(paramList[1] == "!="):
         if(paramList[0] != paramList[2]):
-            for e in ifdict[str(ifpos)]:
+            for e in utildict[str(utilpos)]:
                 fullsplitlist = e.split(" ")
                 formStrings(fullsplitlist)
                 checkArg(arg)
@@ -142,7 +142,7 @@ def dictL_if(literacy = ""):
                     checkArith(arg)
                 else:
                     checkArg(arg)
-        ifpos += 1
+        utilpos += 1
 
 def dictL_input(add = ""):
     global paramList, maindict
@@ -220,8 +220,21 @@ def checkArith(arg):
     if(arg != ""):
         listarg = list(arg)
     
-    if(paramList != [] and len(paramList) == 2 and arg != len(maindict)+1):
-        if(paramList[0] in operations and arg[0]):
+    if(paramList != [] and arg != len(maindict)+1):
+        if(len(paramList) == 4):
+            if(paramList[2] in operations and paramList[0] == "="):
+                try:
+                    if(paramList[2] == "+"):
+                        maindict[str(arg)] = int(paramList[1]) + int(paramList[3])
+                    elif(paramList[2] == "-"):
+                        maindict[str(arg)] = int(paramList[1]) - int(paramList[3])
+                    elif(paramList[2] == "*"):
+                        maindict[str(arg)] = int(paramList[1]) * int(paramList[3])
+                    elif(paramList[2] == "/"):
+                        maindict[str(arg)] = int(paramList[1]) / int(paramList[3])
+                except:
+                    pass
+        elif(paramList[0] in operations and len(paramList) == 2):
             try:
                 if(paramList[0] == "+"):
                     maindict[str(arg)] = int(maindict[str(arg)]) + int(maindict[str(paramList[1])])
@@ -233,17 +246,7 @@ def checkArith(arg):
                     maindict[str(arg)] = int(maindict[str(arg)]) / int(maindict[str(paramList[1])])
             except:
                 pass
-        if(paramList[0] in operations and listarg[0] == "?"):
-            listarg.remove("?")
-            arg = ListToString(listarg)
-            if(paramList[0] == "+"):
-                maindict[str(arg)] = int(arg) + int(paramList[1])
-            elif(paramList[0] == "-"):
-                maindict[str(arg)] = int(arg) - int(paramList[1])
-            elif(paramList[0] == "*"):
-                maindict[str(arg)] = int(arg) * int(paramList[1])
-            elif(paramList[0] == "/"):
-                maindict[str(arg)] = int(arg) / int(paramList[1])
+        
 
 
 #opening the file
@@ -255,7 +258,7 @@ except:
     print("The file", file1,"doesn't exist")
     exit()
 
-fillifDict()
+fillutildict()
 
 #format each line properly
 for e in lines:
