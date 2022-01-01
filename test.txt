@@ -7,7 +7,9 @@ add e
 add f
 add g
 
-prn
-prn !lit test zuiop
-prall
-exit
+if {
+    up
+    dw
+    up
+    dw
+}

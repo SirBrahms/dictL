@@ -1,4 +1,5 @@
 import os
+import re
 
 #Defining global variables
 arg = ""
@@ -17,6 +18,13 @@ def formStrings(fulllist):
     fulllist.remove(arg)
     paramList = fulllist
 
+def ListToString(listStr):
+    retStr = ""
+    for e in listStr:
+        retStr += e + " "
+    return retStr
+
+#dictL code functions commence here
 def dictL_add():
     global paramList
     global maindict
@@ -80,11 +88,26 @@ def dictL_printAll():
 def dictL_exit():
     exit()
 
+def dictL_if():
+    global paramList, lines
+    events = []
+
+    for line in lines:
+        match = re.search(r"{(.+?)}", line)
+        if match:
+            events.append(match.group(1))
+    print(events)
+
 def checkArg(arg):
     global maindict
     global pos
+    listarg = [""] #initialisation of an empty list for listifying "arg" into
 
-    if("*" in arg or arg == "*"):
+    #check if arg is = "" (for proper comment-implementation)
+    if(arg != ""):
+        listarg = list(arg)
+
+    if(arg == "*" or listarg[0] == "*"):
         return
     elif(arg.lower() == "add"):
         dictL_add()
@@ -110,15 +133,22 @@ def checkArg(arg):
         dictL_exit()
     elif(arg == "" or arg == " "):
         return
+    elif(arg.lower() == "if"):
+        dictL_if()
+    """
     else:
         print("Error whilst interpreting: ", arg , "is not a valid argument!")
         exit()
-
+    """
 
 #opening the file
-file1 = input("Enter file to open: ")
-openfile = open(file1, "r")
-lines = openfile.readlines()
+try:
+    file1 = input("Enter file to open: ")
+    openfile = open(file1, "r")
+    lines = openfile.readlines()
+except:
+    print("This file doesn't exist")
+    exit()
 
 #format each line properly
 for e in lines:
