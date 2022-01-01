@@ -76,7 +76,6 @@ file1 = input("Enter file to open: ")
 openfile = open(file1, "r")
 lines = openfile.readlines()
 
-
 #format each line properly
 for e in lines:
     stripstring = e.strip()

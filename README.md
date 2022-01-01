@@ -1,1 +1,1 @@
-#dictL
+The dictL Esolang
