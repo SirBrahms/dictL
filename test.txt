@@ -1,0 +1,8 @@
+*official test-file for the dictL esolang
+add a
+add b
+add c
+add d
+add e
+add f
+
