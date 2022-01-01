@@ -8,8 +8,11 @@ add g
 
 jti 4
 prn
-
 jti 2
 prn
-chng changed
+pushi
+jti 5
 prn
+popi
+prn
+prall
