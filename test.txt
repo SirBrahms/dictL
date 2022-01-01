@@ -6,13 +6,10 @@ add e
 add f
 add g
 
-jti 4
+*test
+*Test
+
 prn
-jti 2
-prn
-pushi
-jti 5
-prn
-popi
-prn
+prn !lit test zuiop
 prall
+exit

@@ -33,16 +33,18 @@ def dictL_down():
 def dictL_print():
     global pos, maindict, paramList
     fullprint = ""
-    if(paramList[0] != ""):
-        print(maindict[str(paramList[0])])
-        return
-    elif("!lit" in paramList):
-        for e in paramList:
-            if(e != "!lit"):
-                fullprint += e + " "
-        print(fullprint)
-        return
-    print(maindict[str(pos)])
+    if(paramList != []):
+        if(paramList[0] != None and paramList[0] != len(maindict) and not "!lit" in paramList):
+            print(maindict[str(paramList[0])])
+            return
+        elif("!lit" in paramList):
+            for e in paramList:
+                if(e != "!lit"):
+                    fullprint += e + " "
+            print(fullprint)
+            return
+    if(maindict != {}):
+        print(maindict[str(pos)])
 
 def dictL_reset():
     global maindict
@@ -75,30 +77,42 @@ def dictL_printAll():
     for e in maindict:
         print(e + " : " + maindict[e])
 
+def dictL_exit():
+    exit()
+
 def checkArg(arg):
     global maindict
     global pos
 
-    if(arg.lower() == "add"):
+    if("*" in arg or arg == "*"):
+        return
+    elif(arg.lower() == "add"):
         dictL_add()
-    if(arg.lower() == "up" and pos != len(maindict) and maindict != {}):
+    elif(arg.lower() == "up" and pos != len(maindict) and maindict != {}):
         dictL_up()
-    if(arg.lower() == "dw" and pos != 1 and maindict != {}):
+    elif(arg.lower() == "dw" and pos != 1 and maindict != {}):
         dictL_down()
-    if(arg.lower() == "prn" and maindict != {}):
+    elif(arg.lower() == "prn"):
         dictL_print()
-    if(arg.lower() == "rst"):
+    elif(arg.lower() == "rst"):
         dictL_reset()
-    if(arg.lower() == "jti" and maindict != {}):
+    elif(arg.lower() == "jti" and maindict != {}):
         dictL_jumpToIndex()
-    if(arg.lower() == "chng" and maindict != {}):
+    elif(arg.lower() == "chng" and maindict != {}):
         dictL_change()
-    if(arg.lower() == "pushi" and maindict != {}):
+    elif(arg.lower() == "pushi" and maindict != {}):
         dictL_pushIndex()
-    if(arg.lower() == "popi" and maindict != {}):
+    elif(arg.lower() == "popi" and maindict != {}):
         dictL_popIndex()
-    if(arg.lower() == "prall"):
+    elif(arg.lower() == "prall"):
         dictL_printAll()
+    elif(arg.lower() == "exit"):
+        dictL_exit()
+    elif(arg == "" or arg == " "):
+        return
+    else:
+        print("Error whilst interpreting: ", arg , "is not a valid argument!")
+        exit()
 
 
 #opening the file
