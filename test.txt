@@ -1,3 +1,4 @@
+*official testing-file for the dictL esolang
 add a
 add b
 add c
@@ -5,9 +6,6 @@ add d
 add e
 add f
 add g
-
-*test
-*Test
 
 prn
 prn !lit test zuiop
