@@ -8,12 +8,15 @@ pos = 1 #position/"index" in the main dictionary
 pushvar = 0 #variable to store the position passed by pushI
 utilpos = 1 #variable used to navigate the "utildict" dictionary
 operations = ["+", "-", "*", "/"] #allowed operations for math-implementation
+opfdlg = True #implementation for use in code
 
 
 #defining the starting dictionary
 maindict = {}
-#defining the dictionary to hold all arguments for "if" statements
+#defining the dictionary to hold all arguments for "if and for" statements
 utildict = {}
+#defining the dictionary to hold all arguments for marker-instructions
+markerdict = {}
 
 #function to distinguish the first element in a line and seperate it
 def formStrings(fulllist):
@@ -45,7 +48,7 @@ def fillutildict():
             eventsFull = []
         else:
             eventsFull.append(stripcommand)
-        
+       
 #dictL code functions commence here
 def dictL_add():
     global paramList, maindict
@@ -114,13 +117,13 @@ def dictL_exit():
 
 def dictL_if(literacy = ""):
     global utildict, paramList, lines, utilpos, maindict
-    #params: [0] = operand 1 [1] = operator, [2]
+    #params: [0] = operand 1, [1] = operator, [2] = operand 2
 
     if(literacy == ""):
         if(str(paramList[0]) in maindict):
-            paramList[0] = maindict[str(paramList[0])]
+            paramList[0] = maindict.get(str(paramList[0]))
         if(str(paramList[2]) in maindict):
-            paramList[2] = maindict[str(paramList[2])]
+            paramList[2] = maindict.get(str(paramList[2]))
 
     if(paramList[1] == "=="):
         if(paramList[0] == paramList[2]):
@@ -170,6 +173,32 @@ def dictL_input(add = ""):
                 print("Error whilst generating input")
                 exit()
 
+def dictL_for():
+    global utildict, paramList, utilpos, maindict
+    ran = int(paramList[1])
+    outvar = str(paramList[0])
+    num = 1
+    
+    for i in range(ran):
+        for e in utildict[str(utilpos)]:
+            if(str(outvar) in maindict):
+                maindict[outvar] = str(i)
+            else:
+                print("Given variable is out of bounds")
+                exit()
+            fullsplitlist = e.split(" ")
+            formStrings(fullsplitlist)
+            if(arg in maindict):
+                checkArith(arg)
+            else:
+                checkArg(arg)
+            
+    utilpos += 1
+
+def dictL_test():
+    pass
+
+
 def checkArg(arg):
     global maindict, pos
     listarg = [""] #initialisation of an empty list for listifying "arg" into
@@ -212,6 +241,12 @@ def checkArg(arg):
         dictL_input()
     elif(arg.lower() == "inp+"):
         dictL_input("+")
+    elif(arg.lower() == "for"):
+        dictL_for()
+    elif(arg[0] == ">"):
+        return
+    elif(arg.lower() == "test"):
+        dictL_test()
 
 def checkArith(arg):
     global operations, paramList, maindict
@@ -250,6 +285,7 @@ def checkArith(arg):
 
 
 #opening the file
+
 try:
     file1 = input("Enter file to open: ")
     openfile = open(file1, "r")
@@ -258,7 +294,14 @@ except:
     print("The file", file1,"doesn't exist")
     exit()
 
+
 fillutildict()
+
+
+#m = re.findall(r'(?s)_\((.*?)\)', ListToString(lines))
+#for i, match in enumerate(m, 1):
+#    splitmatch = match.split(" ")
+
 
 #format each line properly
 for e in lines:

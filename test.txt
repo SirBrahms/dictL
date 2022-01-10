@@ -1,11 +1,7 @@
 *official test-file for the dictL esolang
-add 1
-add 5
+add 0
+add 2
 add 6
 
 
-1 = 1 + 4
-prn 1
 
-2 + 3
-prn 2
